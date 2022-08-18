@@ -35,8 +35,8 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.json());
 
-//  http://localhost:5000/docs
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
+//  http://localhost:5000/docs/user
+app.use("/docs/user", swaggerUI.serve, swaggerUI.setup(swaggerSpecs));
 
 //  http://localhost:5000/notes
 app.use("/notes", router);
