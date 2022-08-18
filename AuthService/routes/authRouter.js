@@ -1,13 +1,13 @@
 const Router = require("express");
 const router = new Router();
-const { body } = require("express-validator");
 const AuthController = require("../controllers/authController");
+const { body } = require("express-validator");
 
 //  http://localhost:5000/ecosystem/auth/register
 router.post(
     "/register",
     body("email").isEmail(),
-    body("password").isLength({ min: 8, max: 24 }), 
+    body("password").isLength({ min: 8, max: 24 }),
     AuthController.register
 );
 
