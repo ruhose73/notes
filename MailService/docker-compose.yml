@@ -1,0 +1,17 @@
+version: '3.0'
+
+services:
+  main: 
+    container_name: mail
+    build: 
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - .:/mailservice
+      - /mailservice/node_modules
+    ports:
+      - 5200:5200
+      - 9225:9225
+    command: npm run server
+    restart: always
