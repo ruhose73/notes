@@ -1,0 +1,29 @@
+version: '3.0'
+
+services:
+  main: 
+    container_name: notes
+    build: 
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - .:/noteservice
+      - /noteservice/node_modules
+    ports:
+      - 5100:5100
+      - 9228:9228
+    command: npm run server
+    restart: always
+  postgres:
+    image: postgres:12
+    ports:
+        - "5431:5431"
+    expose:
+        - "5432"
+    hostname: postgres
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: 123456789
+        POSTGRES_DB: notes
+    restart: on-failure
