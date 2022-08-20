@@ -5,6 +5,7 @@ const ApiStatus = require("../handlers/apiStatus")
 const AuthDTO = require("../dto/authDTO");
 const tokenService = require("./tokenService");
 const mailService = require("./mailService");
+const ExternalMailService = require("./externalMailServise");
 
 
 class AuthService {
@@ -23,7 +24,9 @@ class AuthService {
         });
         const userLink =
             process.env.API_URL + "/notes/auth/activate/" + activationLink;
-        await mailService.sendActivationMail(email, userLink);
+        
+        await ExternalMailService.sendGreetingNotification(email, userLink)
+
         const authDTO = new AuthDTO(user);
         const token = tokenService.generateToken({ ...authDTO });
         return { token, user: authDTO };
