@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 const uuid = require("uuid");
 const ApiStatus = require("../handlers/apiStatus")
 const AuthDTO = require("../dto/authDTO");
@@ -14,7 +14,7 @@ class AuthService {
         if (candidate) {
             throw ApiStatus.badRequest("Пользователь с таким email уже существует");
         }
-        const hashedPassword = await bcrypt.hash(password, 5);
+        const hashedPassword = await bcryptjs.hash(password, 5);
         const activationLink = uuid.v4();
         const user = await User.create({
             email,
@@ -34,7 +34,7 @@ class AuthService {
         if (!user) {
             throw ApiStatus.badRequest("Пользователь с таким email не был найден");
         }
-        const isPassEquals = await bcrypt.compare(password, user.password);
+        const isPassEquals = await bcryptjs.compare(password, user.password);
         if (!isPassEquals) {
             throw ApiStatus.badRequest("Неверные данные");
         }

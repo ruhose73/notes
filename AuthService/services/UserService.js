@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const ApiStatus = require("../handlers/apiStatus")
 const UserDTO = require("../dto/userDTO");
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 
 class UserService {
 
@@ -21,11 +21,11 @@ class UserService {
         if (!user) {
             throw ApiStatus.badRequest("Пользователь не был найден");
         }
-        const isPassEquals = await bcrypt.compare(oldPassword, user.password);
+        const isPassEquals = await bcryptjs.compare(oldPassword, user.password);
         if (!isPassEquals) {
             throw ApiStatus.badRequest("Неверные данные");
         }
-        const hashedPassword = await bcrypt.hash(newPassword, 5);
+        const hashedPassword = await bcryptjs.hash(newPassword, 5);
         user.password = hashedPassword;
         await user.save();
         return null
