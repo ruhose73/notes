@@ -4,10 +4,7 @@ const uuid = require("uuid");
 const ApiStatus = require("../handlers/apiStatus")
 const AuthDTO = require("../dto/authDTO");
 const tokenService = require("./tokenService");
-const mailService = require("./mailService");
 const ExternalMailService = require("./externalMailServise");
-
-
 class AuthService {
 
     async registration(email, password) {
